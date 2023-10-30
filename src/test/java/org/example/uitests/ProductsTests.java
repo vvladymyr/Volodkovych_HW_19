@@ -1,9 +1,12 @@
 package org.example.uitests;
 
+import org.example.uitests.driver.WebDriverHolder;
 import org.example.uitests.pages.shop_main.Product;
 import org.example.uitests.pages.shop_main.ProductPageShop;
 import org.example.uitests.pages.shop_main.SortDirection;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -11,18 +14,22 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+
 public class ProductsTests extends BaseTests {
 
     @BeforeClass
     public void beforeClass() {
+
         goToPart("8-dresses");
     }
 
     @Test
-    public void allProductsTest() {
-        List<Product> productList = new ProductPageShop().getProducts();
+    public void changeItemsPerPage() throws InterruptedException {
+        ProductPageShop productPageShop = new ProductPageShop();
+        productPageShop.setItemsPerPage(60);
 
-        Assert.assertEquals(productList.size(), 12);
+        List<Product> productList = productPageShop.getProducts();
+        Assert.assertEquals(productList.size(), 30);
     }
 
     @Test
@@ -43,7 +50,7 @@ public class ProductsTests extends BaseTests {
     }
 
     @Test
-    public void checkSortingTestCustom() throws InterruptedException {
+    public void customSortingTest() throws InterruptedException {
         ProductPageShop productPageShop = new ProductPageShop();
         List<Product> productsAsIs = productPageShop.getProducts();
 
@@ -53,4 +60,5 @@ public class ProductsTests extends BaseTests {
 
         Assert.assertEquals(productsAsIs, productsAfterSorting);
     }
+
 }

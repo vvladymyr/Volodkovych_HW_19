@@ -12,6 +12,8 @@ import java.util.List;
 
 public class ProductPageShop extends BasePage {
 
+    @FindBy(id = "nb_item")  // Доданий новий WebElement
+    private WebElement itemsPerPageElement;  // Елемент для вибору кількості товарів на сторінці
     @FindBy(id = "selectProductSort")
     private WebElement sortByElement;
 
@@ -47,6 +49,12 @@ public class ProductPageShop extends BasePage {
     public ProductPageShop sortBy(SortDirection sortDirection) throws InterruptedException {
         Select select = new Select(sortByElement);
         select.selectByValue(sortDirection.getValue());
+        sleep(1000);
+        return new ProductPageShop();
+    }
+    public ProductPageShop setItemsPerPage(int itemsPerPage) throws InterruptedException {
+        Select select = new Select(itemsPerPageElement);
+        select.selectByVisibleText(String.valueOf(itemsPerPage));
         sleep(1500);
         return new ProductPageShop();
     }

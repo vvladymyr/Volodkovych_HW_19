@@ -24,7 +24,7 @@ public class WebDriverHolder {
 
     public void driverQuit() {
         if (driver != null) {
-//            driver.quit();
+            driver.quit();
         }
     }
 }
